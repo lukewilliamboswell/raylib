@@ -86,7 +86,7 @@ const dir_raylib = cwd ++ sep ++ "raylib/src";
 
 const raylib_build = @import("raylib/src/build.zig");
 
-fn linkThisLibrary(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.Mode) *std.build.LibExeObjStep {
+pub fn linkThisLibrary(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.Mode) *std.build.LibExeObjStep {
     const lib = b.addStaticLibrary(.{ .name = "raylib-zig", .target = target, .optimize = optimize });
     lib.addIncludePath(.{ .path = dir_raylib });
     lib.addIncludePath(.{ .path = cwd });
