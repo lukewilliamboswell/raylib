@@ -96,12 +96,12 @@ pub fn linkThisLibrary(b: *std.Build, target: std.zig.CrossTarget, optimize: std
 }
 
 /// add this package to exe
-pub fn addTo(b: *std.Build, exe: *std.build.Step.Compile, target: std.zig.CrossTarget, optimize: std.builtin.Mode, raylibOptions: raylib_build.Options) void {
+pub fn addTo(b: *std.Build, exe: *std.build.Step.Compile, target: std.zig.CrossTarget, optimize: std.builtin.Mode, raylibOptions: raylib_build.Options) !void {
     exe.addAnonymousModule("raylib", .{ .source_file = .{ .path = cwd ++ sep ++ "raylib.zig" } });
     exe.addIncludePath(.{ .path = dir_raylib });
     exe.addIncludePath(.{ .path = cwd });
     const lib = linkThisLibrary(b, target, optimize);
-    const lib_raylib = raylib_build.addRaylib(b, target, optimize, raylibOptions);
+    const lib_raylib = try raylib_build.addRaylib(b, target, optimize, raylibOptions);
     exe.linkLibrary(lib_raylib);
     exe.linkLibrary(lib);
 }
